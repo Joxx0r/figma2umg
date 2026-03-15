@@ -4,6 +4,7 @@
 
 #include "Builder/Widget/BorderWidgetBuilder.h"
 
+#include "Figma2UMGModule.h"
 #include "FigmaImportSubsystem.h"
 #include "Blueprint/WidgetTree.h"
 #include "Parser/Nodes/FigmaGroup.h"

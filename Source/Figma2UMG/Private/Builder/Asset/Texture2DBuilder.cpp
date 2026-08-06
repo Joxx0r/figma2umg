@@ -37,7 +37,7 @@ void UTexture2DBuilder::LoadOrCreateAssets()
 		}
 
 		const FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
-		const FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FSoftObjectPath(*PackageName, *AssetName, FString()));
+		const FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FSoftObjectPath(FTopLevelAssetPath(FName(*PackageName), FName(*AssetName))));
 		TextureAsset = Cast<UTexture2D>(AssetData.FastGetAsset(true));
 
 		if (TextureAsset == nullptr)
@@ -76,7 +76,7 @@ void UTexture2DBuilder::LoadAssets()
 	const FString PackageName = UPackageTools::SanitizePackageName(PackagePath + TEXT("/") + AssetName);
 
 	const FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
-	const FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FSoftObjectPath(*PackageName, *AssetName, FString()));
+	const FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FSoftObjectPath(FTopLevelAssetPath(FName(*PackageName), FName(*AssetName))));
 	Asset = Cast<UTexture2D>(AssetData.FastGetAsset(true));
 }
 

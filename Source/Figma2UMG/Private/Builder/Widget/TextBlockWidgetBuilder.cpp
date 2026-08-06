@@ -114,7 +114,7 @@ void UTextBlockWidgetBuilder::Setup() const
 		Widget->SetColorAndOpacity(FigmaText->Fills[0].GetLinearColor());
 		if (FigmaText->Fills.Num() > 1)
 		{
-			UE_LOG_Figma2UMG(Warning, TEXT("[UTextBlockWidgetBuilder::Setup] Node %s has &i FFigmaPaints, only 1 is supported. Using the first."), *Node->GetNodeName(), FigmaText->Fills.Num());
+			UE_LOG_Figma2UMG(Warning, TEXT("[UTextBlockWidgetBuilder::Setup] Node %s has %i FFigmaPaints, only 1 is supported. Using the first."), *Node->GetNodeName(), FigmaText->Fills.Num());
 		}
 	}
 }

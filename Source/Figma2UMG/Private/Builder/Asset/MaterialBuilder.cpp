@@ -34,7 +34,7 @@ void UMaterialBuilder::LoadOrCreateAssets()
 
 		UClass* AssetClass = UMaterial::StaticClass();
 		const FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
-		const FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FSoftObjectPath(*PackageName, *AssetName, FString()));
+		const FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FSoftObjectPath(FTopLevelAssetPath(FName(*PackageName), FName(*AssetName))));
 		MaterialAsset = Cast<UMaterial>(AssetData.FastGetAsset(true));
 
 		if (MaterialAsset == nullptr)
@@ -70,7 +70,7 @@ void UMaterialBuilder::LoadAssets()
 	const FString PackageName = UPackageTools::SanitizePackageName(PackagePath + TEXT("/") + AssetName);
 
 	const FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
-	const FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FSoftObjectPath(*PackageName, *AssetName, FString()));
+	const FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FSoftObjectPath(FTopLevelAssetPath(FName(*PackageName), FName(*AssetName))));
 	Asset = Cast<UMaterial>(AssetData.FastGetAsset(true));
 }
 

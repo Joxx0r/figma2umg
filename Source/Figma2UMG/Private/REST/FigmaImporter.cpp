@@ -697,7 +697,7 @@ void UFigmaImporter::TryFixNullImagesURLResponse(TSharedPtr<FJsonObject> JsonObj
 	{
 		TSharedPtr<FJsonValueString> empty = MakeShared<FJsonValueString>(FString("INVALID"));
 		TSharedPtr<FJsonObject> ObjectValue = Field->AsObject();
-		for (TTuple<FString, TSharedPtr<FJsonValue>>& Entry : ObjectValue->Values)
+		for (auto& Entry : ObjectValue->Values)
 		{
 			if (Entry.Value.IsValid() && Entry.Value->IsNull())
 			{

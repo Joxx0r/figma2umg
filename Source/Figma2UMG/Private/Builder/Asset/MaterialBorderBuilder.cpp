@@ -39,7 +39,7 @@ void UMaterialBorderBuilder::LoadOrCreateAssets()
 
 		UClass* AssetClass = UMaterial::StaticClass();
 		const FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
-		const FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FSoftObjectPath(*PackageName, *AssetName, FString()));
+		const FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FSoftObjectPath(FTopLevelAssetPath(FName(*PackageName), FName(*AssetName))));
 		MaterialAsset = Cast<UMaterial>(AssetData.FastGetAsset(true));
 
 		if (MaterialAsset == nullptr)
@@ -124,7 +124,7 @@ void UMaterialBorderBuilder::LoadAssets()
 		const FString AssetName = "BorderMaterial";
 		const FString PackageName = UPackageTools::SanitizePackageName(PackagePath + TEXT("/") + AssetName);
 
-		const FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FSoftObjectPath(*PackageName, *AssetName, FString()));
+		const FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FSoftObjectPath(FTopLevelAssetPath(FName(*PackageName), FName(*AssetName))));
 		Asset = Cast<UMaterial>(AssetData.FastGetAsset(true));
 		ManageMaterial = true;
 		if(Importer)
@@ -137,7 +137,7 @@ void UMaterialBorderBuilder::LoadAssets()
 	{
 		const FString AssetInstanceName = UPackageTools::SanitizePackageName("BorderMaterialInst_" + FString::SanitizeFloat(GetStrokeWeight(), 0) + "px");
 		const FString InstancePackageName = UPackageTools::SanitizePackageName(PackagePath + TEXT("/") + AssetInstanceName);
-		const FAssetData InstanceAssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FSoftObjectPath(*InstancePackageName, *AssetInstanceName, FString()));
+		const FAssetData InstanceAssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FSoftObjectPath(FTopLevelAssetPath(FName(*InstancePackageName), FName(*AssetInstanceName))));
 		InstanceAsset = Cast<UMaterialInstanceConstant>(InstanceAssetData.FastGetAsset(true));
 		ManageMaterialInstance = true;
 		if (Importer)

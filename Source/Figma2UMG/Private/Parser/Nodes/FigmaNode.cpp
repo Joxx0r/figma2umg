@@ -562,8 +562,8 @@ UFigmaNode* UFigmaNode::CreateNode(const TSharedPtr<FJsonObject>& JsonObj)
 	if (FigmaNode != nullptr)
 	{
 		// Get node name for logging
-		FString NodeName = JsonObj->HasField("name") ? JsonObj->GetStringField("name") : TEXT("Unknown");
-		FString NodeId = JsonObj->HasField("id") ? JsonObj->GetStringField("id") : TEXT("Unknown");
+		FString NodeName = JsonObj->HasField(TEXT("name")) ? JsonObj->GetStringField(TEXT("name")) : TEXT("Unknown");
+		FString NodeId = JsonObj->HasField(TEXT("id")) ? JsonObj->GetStringField(TEXT("id")) : TEXT("Unknown");
 
 		UE_LOG_Figma2UMG(Display, TEXT("[CreateNode] Attempting to deserialize node: %s (ID: %s, Type: %s, Class: %s)"),
 			*NodeName, *NodeId, *NodeTypeStr, *FigmaNode->GetClass()->GetName());
@@ -602,17 +602,21 @@ UFigmaNode* UFigmaNode::CreateNode(const TSharedPtr<FJsonObject>& JsonObj)
 
 			// Log the JSON keys to help debug
 			TArray<FString> Keys;
-			JsonObj->Values.GetKeys(Keys);
+			for (const auto& Entry : JsonObj->Values)
+			{
+				Keys.Emplace(Entry.Key.ToView());
+			}
 			UE_LOG_Figma2UMG(Error, TEXT("[CreateNode] JSON keys for failed node: %s"), *FString::Join(Keys, TEXT(", ")));
 
 			// Log specific field types to identify the problematic field
-			for (const FString& Key : Keys)
+			for (const auto& Entry : JsonObj->Values)
 			{
-				const TSharedPtr<FJsonValue>* Value = JsonObj->Values.Find(Key);
-				if (Value && Value->IsValid())
+				const FString Key(Entry.Key.ToView());
+				const TSharedPtr<FJsonValue>& Value = Entry.Value;
+				if (Value.IsValid())
 				{
 					FString OtherStr;
-					switch ((*Value)->Type)
+					switch (Value->Type)
 					{
 						case EJson::None: OtherStr = TEXT("None"); break;
 						case EJson::Null: OtherStr = TEXT("Null"); break;
